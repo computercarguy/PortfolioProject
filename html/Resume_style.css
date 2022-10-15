@@ -1,0 +1,8 @@
+body {  margin: 0px;}.navpane{  width:1%;  vertical-align:top;  text-align:left;  background-image: linear-gradient(to right, gold 80%, #8EAEF2);}
+.left {  text-align:left;}
+.cent {  text-align:center;  white-space:nowrap;}
+.cent33 {  text-align:center;  width:33%;  white-space:nowrap;}
+.cent34 {  text-align:center;  width:34%;  white-space:nowrap;}
+.legal {  text-align:center;  font-size:small}
+.text {  text-align:left;  vertical-align:top;}
+.text2 {  text-align:left;  vertical-align:middle;  width:20%;  white-space:nowrap;}.tab {	margin-left: 2em;}

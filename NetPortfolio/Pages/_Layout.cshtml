@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Portfolio by Eric Ingamells - C# .Net Razor pages version</title>
+
+    <link rel="stylesheet" type="text/css" href="~/css/Resume_style.css" />
+    <script type="text/javascript" src="~/js/Resume_functs.js"></script>
+
+</head>
+<body style="background-color:#B9B9B9">
+    <table style="margin-left:auto;margin-right:auto;width:98%;border-collapse:collapse;">
+        <tr>
+            <td class="navpanerazor">
+                <table style="width:100%">
+                    <tr>
+                        <td colspan="2" style="width:10%;text-align:center;white-space:nowrap;padding-right:20px;padding-left:20px;"><h1><a href="index.html" style="color:#aaaaaa">Eric Ingamells</a></h1></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="white-space:nowrap;text-align:center;"><h3><a href="index.html" style="color:#aaaaaa">Online Portfolio</a></h3></td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <select onchange="window.location = this.value;">
+                                <option value="http://intensecomputers.com/portfolio/html">HTML</option>
+                                <option value="http://intensecomputers.com/portfolio/">HTML + JavaScript</option>
+                                <option value="http://intensecomputers.com/portfolio/index.php">PHP</option>
+                                <option value="http://portfolio.intensecomputers.com/" selected>C# .Net Razor pages</option>
+                                <!--<option>C# .Net Database pages</option>-->
+                            </select>
+                            <button type="button" onclick="GoToPage('About', 0)" alt="question circle" title="Select which version of this portfolio site you want to see. Click this button for more info."><img src="~/images/question-circle.svg" /></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="menu"><button type="button" class="buttonLink" onclick="GoToPage('Browser', 1)">Software &amp; Utilities</button></td>
+                        <td style="width:50px;">&nbsp;</td>
+                    </tr>
+                    @if (new[] { "Browser based apps", "Standalone apps", "Games" }.Contains(ViewData["Title"]))
+                    {
+                        <tr>
+                            <td>
+                                <button type="button" class="buttonLink tab" onclick="GoToPage('Browser', 1)">Online</button>
+                                <br />
+                                <button type="button" class="buttonLink tab" onclick="GoToPage('Standalone', 1)">Standalone</button>
+                                <br />
+                                <button type="button" class="buttonLink tab" onclick="GoToPage('Games', 1)">Games</button>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td>
+                            <button type="button" class="buttonLink" onclick="GoToPage('Business', 2)">Websites</button>
+                        </td>
+                    </tr>
+                    @if (new[] { "Business sites", "Personal use" }.Contains(ViewData["Title"]))
+                    {
+                        <tr>
+                            <td>
+                                <button type="button" class="buttonLink tab" onclick="GoToPage('Business', 2)">Business</button>
+                                <br />
+                                <button type="button" class="buttonLink tab" onclick="GoToPage('Personal', 2)">Personal</button>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td><button type="button" class="buttonLink" onclick="GoToPage('Profiles', 3)">Online Profiles</button></td>
+                    </tr>
+                </table>
+            </td>
+            <td id="content" style="text-align:center;vertical-align:top;background-color:#8EAEF2">
+                @RenderBody()
+            </td>
+        </tr>
+        <tr>
+            <td class="cent" colspan="3">
+                <table style="width:100%">
+                    <tr>
+                        <td class="cent33">Eric Ingamells</td>
+                        <td class="cent34">Desktop, Mobile, Web, and Micro-controller Software Developer</td>
+                        <td class="cent33"><a href="mailto:ComputerCarGuy&#64;GMail.com">ComputerCarGuy&#64;GMail.com</a></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="legal">Eric Ingamells uses this page as an informational portfolio for job seeking purposes only, and reserves<br />the right to restrict the content of this, related, and referenced sites to non-commercial uses only.</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="legal">All trademarks, trade names, service marks, and logos referenced within this website belong to their respective companies.</td>
+        </tr>
+    </table>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,147 @@
+﻿body {
+    margin: 0px;
+}
+
+.navpanerazor {
+    width: 1%;
+    vertical-align: top;
+    text-align: left;
+    background-image: linear-gradient(to right, indigo 80%, #8EAEF2);
+}
+
+td.menu {
+    color: #DEDFE7;
+    text-decoration: underline;
+    display: block;
+    text-align: left;
+    white-space: nowrap;
+}
+
+a.menu:link {
+    color: #DEDFE7;
+}
+
+a.menu:visited {
+    color: #DEDFE7;
+}
+
+a.menu:hover {
+    color: #DEDFE7;
+}
+
+a.menu:active {
+    color: #DEDFE7;
+}
+
+td.menu2 {
+    color: #ADB2BD;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+}
+
+a.menu2:link {
+    color: #ADB2BD;
+}
+
+a.menu2:visited {
+    color: #ADB2BD;
+}
+
+a.menu2:hover {
+    color: #ADB2BD;
+}
+
+a.menu2:active {
+    color: #ADB2BD;
+}
+
+td.menu3 {
+    color: #DEDFE7;
+    text-decoration: underline;
+    cursor: pointer;
+    display: block;
+    text-align: left;
+    white-space: nowrap;
+}
+
+td.left {
+    text-align: left;
+}
+
+td.cent {
+    text-align: center;
+    white-space: nowrap;
+}
+
+td.cent33 {
+    text-align: center;
+    width: 33%;
+    white-space: nowrap;
+}
+
+td.cent34 {
+    text-align: center;
+    width: 34%;
+    white-space: nowrap;
+}
+
+td.mid {
+    text-align: center;
+    vertical-align: middle;
+    width: 20%;
+}
+
+td.legal {
+    text-align: center;
+    font-size: small
+}
+
+td.text {
+    text-align: left;
+    vertical-align: top;
+}
+
+td.text2 {
+    text-align: left;
+    vertical-align: middle;
+    width: 20%;
+    white-space: nowrap;
+}
+
+label.link {
+    color: #DEDFE7;
+    text-decoration: underline;
+    cursor: pointer;
+    display: block;
+}
+
+a.mylink:link {
+    color: #DEDFE7;
+}
+
+a.mylink:visited {
+    color: #DEDFE7;
+}
+
+a.mylink:hover {
+    color: #DEDFE7;
+}
+
+a.mylink:active {
+    color: #DEDFE7;
+}
+
+.buttonLink {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    font-family: arial, sans-serif;
+    color: #DEDFE7;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.tab {
+    margin-left: 2em;
+}
