@@ -1,11 +1,50 @@
-﻿@page
+﻿@namespace NetPortfolio
+@model Models.Page
 
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Dynamic pages";
 }
 
+<table>
+    @{
+        var contents = Model.Contents.OrderBy(c => c.Sequence);
+        for (int i = 0; i < contents.Count(); i++)
+        {
+            var line = contents.ElementAt(i);
 
+            <tr>
+                <td @if (string.IsNullOrEmpty(line.CssClasses)) { <text> class="@line.CssClasses" </text> }
+                    @if (string.IsNullOrEmpty(line.Style)) { <text> style="@line.Style" </text> }
+                    @if (line.ColSpan != null) { <text> colspan="@line.ColSpan" </text> }
+                    @if (line.RowSpan != null) { <text> rowspan="@line.RowSpan" </text> }>
+                    @line.Value
+                </td>
+
+                @if (line.Sequence != Math.Truncate(line.Sequence))
+                {
+                    // assuming there's only 1 other element in this row
+                    <td style="width:5%">&nbsp;</td>
+                    line = contents.ElementAt(++i);
+
+                    <td @if (string.IsNullOrEmpty(line.CssClasses)) { <text> class="@line.CssClasses" </text> }
+                        @if (string.IsNullOrEmpty(line.Style)) { <text> style="@line.Style" </text> }
+                        @if (line.ColSpan != null) { <text> colspan="@line.ColSpan" </text> }
+                        @if (line.RowSpan != null) { <text> rowspan="@line.RowSpan" </text> }>
+                        @line.Value
+                    </td>
+                }
+            </tr>
+
+            if (i < contents.Count() - 1)
+            {
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+            }
+        }
+    }
+</table>
 
 @section Scripts {
     <script type="text/javascript">

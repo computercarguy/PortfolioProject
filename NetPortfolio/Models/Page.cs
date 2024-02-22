@@ -8,6 +8,6 @@ namespace NetPortfolio.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public readonly List<Content> Contents = new List<Content>();
+        public readonly List<Content> Contents = new();
     }
 }
