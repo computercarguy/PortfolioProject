@@ -154,7 +154,7 @@ namespace NetPortfolio.Repos
                 return string.Empty;
             }
 
-            List<string> returnResults = [];
+            List<string> returnResults = new();
 
             foreach (KeyValuePair<string, string> entry in parameters)
             {
