@@ -10,21 +10,21 @@ phases:
   pre_build:
     commands:
       - echo Restore started on `date`
-      - dotnet restore NetPortfolio/NetPortfolio.csproj
+      - dotnet restore NetPortfolio.csproj
       
   build:
     commands:
       - echo Build started on `date`
-      - dotnet build NetPortfolio/NetPortfolio.csproj
+      - dotnet build NetPortfolio.csproj
       # echo Test started on `date`
-      # dotnet test NetPortfolio/NetPortfolio.csproj
+      # dotnet test NetPortfolio.csproj
       
   post_build:
     commands:
       - echo Publish started on `date`
       # https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/dotnet-linux-platform-bundle-app.html
-      - dotnet publish -c Release -r linux-x64 NetPortfolio/NetPortfolio.csproj
+      - dotnet publish -c Release -r linux-x64 NetPortfolio.csproj
       
 artifacts:
   files:
-    - NetPortfolio/**/*
+    - ./**/*

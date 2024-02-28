@@ -1,30 +1,79 @@
-# PortfolioProject
-Multiple versions of my online portfolio site in different tech stacks.
+# ASP.NET Core Web API Serverless Application
 
-Various recruiters and managers ask me what programming languages I know. Well, I know a lot of them, so then they ask me to provide them with examples. Unfortunately, most of what I write is proprietary for the businesses I work for. Most of the rest of the code is for projects I'm trying to write to make money, so I don't have a lot to show off.
+This project shows how to run an ASP.NET Core Web Application as a serverless application. The NuGet package [Amazon.Lambda.AspNetCoreServer](https://www.nuget.org/packages/Amazon.Lambda.AspNetCoreServer) contains a Lambda function that is used to translate requests from API Gateway into the ASP.NET Core framework and then the responses from ASP.NET Core back to API Gateway.
 
-Until now.
+For more information about how the Amazon.Lambda.AspNetCoreServer package works and how to extend its behavior view its [README](https://github.com/aws/aws-lambda-dotnet/blob/master/Libraries/src/Amazon.Lambda.AspNetCoreServer/README.md) file in GitHub.
 
-Well, sort of.
+### Adding AWS SDK for .NET ###
 
-Let me back up a bit. I have a 6 page resume. That's a lot of information packed in there, but it doesn't cover everything I know or have done, and the format of a resume doesn't prove that I know how to write code, or really anything else. It's just a piece of paper that people can either believe or not, and I don't have much control over that.
+To integrate the AWS SDK for .NET with the dependency injection system built into ASP.NET Core add the NuGet 
+package [AWSSDK.Extensions.NETCore.Setup](https://www.nuget.org/packages/AWSSDK.Extensions.NETCore.Setup/). Then in 
+the `ConfigureServices` method  in `Startup.cs` file register the AWS service with the `IServiceCollection`.
 
-So I wrote a website to help display some of my projects. But that was kind of limiting, too. I didn't have examples of all the kind of projects I've written, or even all the languages I know or the ways I've used them.
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMvc();
 
-So now, with this project, I'm trying to fix at least some of that. I'm adding projects to the site. I've rearranged things. I've added a list of online profiles where I've done training, written code for puzzles, answered programming questions, posted games I've written, and some other relevant profiles.
+    // Add S3 to the ASP.NET Core dependency injection framework.
+    services.AddAWSService<Amazon.S3.IAmazonS3>();
+}
+```
 
-The most significant thing I'm doing is rewriting the site. Not just from scratch, but multiple versions of the same site in different languages. Granted, I reused a lot of the original site, but I've refactored that quite a bit and had to rewrite a bit of the original just to be better code, too.
+### Configuring for API Gateway HTTP API ###
 
-So now I give you a flat HTML version, an HTML version that uses JavaScript to pull pages from the server to act like a SPA, the rebuilt PHP version, and even a version written in C# .Net using Razor pages.
+API Gateway supports the original REST API and the new HTTP API. In addition HTTP API supports 2 different
+payload formats. When using the 2.0 format the base class of `LambdaEntryPoint` must be `Amazon.Lambda.AspNetCoreServer.APIGatewayHttpApiV2ProxyFunction`.
+For the 1.0 payload format the base class is the same as REST API which is `Amazon.Lambda.AspNetCoreServer.APIGatewayProxyFunction`.
+**Note:** when using the `AWS::Serverless::Function` CloudFormation resource with an event type of `HttpApi` the default payload
+format is 2.0 so the base class of `LambdaEntryPoint` must be `Amazon.Lambda.AspNetCoreServer.APIGatewayHttpApiV2ProxyFunction`.
 
-I've built a MySQL database with the HTML content in it, I'm working on a PHP API to access it, and a C# .Net app to request the data from the PHP API and display it. I haven't finished that yet, but I'm posting what I have due to potential employers wanting to see my profile, and I want to give them a better experience than the old, out of date, and not very well written PHP version. And I wanted to post the code for them to see, too.
+### Configuring for Application Load Balancer ###
 
-In this case, posting the code is critical, since I could just be pretending that these are different versions of the same site. I do use a different background color for each site to help distinguish them, but that could just be a CSS change while reusing the same site in different ways. Sure, the background color change is a CSS change, but these really are completely different sites, and looking at the dev console can show some of it, but not all of it. Many of the changes are where the pages are being rendered, which is server side. This means that the plain HTML site will look nearly identical to the PHP and C# .Net versions in the browser.
+To configure this project to handle requests from an Application Load Balancer instead of API Gateway change
+the base class of `LambdaEntryPoint` from `Amazon.Lambda.AspNetCoreServer.APIGatewayProxyFunction` to 
+`Amazon.Lambda.AspNetCoreServer.ApplicationLoadBalancerFunction`.
 
-Even with the C# .Net version I'm currently working on, it's not the final piece. I'm also going to add a PHP version that uses the PHP API. I'm also planning on copying the MySQL DB over to other DB types, like MS SQL Server, Oracle, and maybe a few others, too, then building a C# .Net API to handle those queries. The current DB only has 2 tables, but there is references between them. I'm not sure how NoSQL DB's will work with that, since it's been a few years since I used ElasticSearch.
+### Project Files ###
 
-I'm also going to write ReactJS, TypeScript, and other sites, as well. I'm doing this as broad spectrum as I can. I've used Java for many projects, but I've never written an API in Java. That's on this list. So is learning Node.js, Angular, Vue, Bootstrap, Svelt, and I'm not sure what else.
+* serverless.template - an AWS CloudFormation Serverless Application Model template file for declaring your Serverless functions and other AWS resources
+* aws-lambda-tools-defaults.json - default argument settings for use with Visual Studio and command line deployment tools for AWS
+* LambdaEntryPoint.cs - class that derives from **Amazon.Lambda.AspNetCoreServer.APIGatewayProxyFunction**. The code in 
+this file bootstraps the ASP.NET Core hosting framework. The Lambda function is defined in the base class.
+Change the base class to **Amazon.Lambda.AspNetCoreServer.ApplicationLoadBalancerFunction** when using an 
+Application Load Balancer.
+* LocalEntryPoint.cs - for local development this contains the executable Main function which bootstraps the ASP.NET Core hosting framework with Kestrel, as for typical ASP.NET Core applications.
+* Startup.cs - usual ASP.NET Core Startup class used to configure the services ASP.NET Core will use.
 
-One other thing to note. I have two different hosting solutions. One is a GoDaddy Linux hosting with cPanel and the other is a free AWS account. I'm putting the C# .Net projects and most of the databases on the AWS account and the MySQL, HTML versions, PHP, and other projects on the Linux hosting. I'm also looking to create other c# .Net projects in various version of .Net to post on Azure and possibly Google Cloud. My current C# project is .Net Core 3.1. I'm using Visual Studio 2019 Community Edition, so I think that's as high as I can go. Once I take the time to install VS 2022, I'll be able to work on .Net 5 and 6.
 
-Thank you for taking the time to read this. I know I got into the weeds on some of this, but there's a lot to cover and I wanted to explain things thoroughly, since this project is big and nowhere near complete. 
+## Here are some steps to follow from Visual Studio:
+
+To deploy your Serverless application, right click the project in Solution Explorer and select *Publish to AWS Lambda*.
+
+To view your deployed application open the Stack View window by double-clicking the stack name shown beneath the AWS CloudFormation node in the AWS Explorer tree. The Stack View also displays the root URL to your published application.
+
+## Here are some steps to follow to get started from the command line:
+
+Once you have edited your template and code you can deploy your application using the [Amazon.Lambda.Tools Global Tool](https://github.com/aws/aws-extensions-for-dotnet-cli#aws-lambda-amazonlambdatools) from the command line.
+
+Install Amazon.Lambda.Tools Global Tools if not already installed.
+```
+    dotnet tool install -g Amazon.Lambda.Tools
+```
+
+If already installed check if new version is available.
+```
+    dotnet tool update -g Amazon.Lambda.Tools
+```
+
+Execute unit tests
+```
+    cd "NetPortfolio/test/NetPortfolio.Tests"
+    dotnet test
+```
+
+Deploy application
+```
+    cd "NetPortfolio/src/NetPortfolio"
+    dotnet lambda deploy-serverless
+```
