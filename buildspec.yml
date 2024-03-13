@@ -23,7 +23,7 @@ phases:
     commands:
       - echo Publish started on `date`
       # https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/dotnet-linux-platform-bundle-app.html
-      - dotnet publish -c Release -r linux-x64 NetPortfolio.csproj
+      - dotnet publish -c Release -r win-x64 NetPortfolio.csproj
       
 artifacts:
   files:
